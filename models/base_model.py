@@ -1,3 +1,4 @@
+from models import storage
 import uuid
 from datetime import datetime
 
