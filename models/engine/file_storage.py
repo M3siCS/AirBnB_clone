@@ -1,29 +1,47 @@
+#!/usr/bin/python3
+"""File Storage for AirBnB Clone"""
 import json
+from os.path import exists
+
 
 class FileStorage:
+    """Class for FileStorage"""
+
     __file_path = "file.json"
-    __objects = {}
+    __objects = dict()
 
     def all(self):
-        return FileStorage.__objects
+        """return the dictionary __objects"""
+        return self.__objects
 
     def new(self, obj):
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        FileStorage.__objects[key] = obj
+        """sets obj in __objects with key <obj class name>.id"""
+        self.__objects[obj.__class__.__name__ + '.' + obj.id] = obj
 
     def save(self):
-        with open(FileStorage.__file_path, 'w', encoding='utf-8') as f:
-            serialized_objs = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
-            json.dump(serialized_objs, f)
+        """serialize __objects to JSON file"""
+        temp = dict()
+        for key, obj in self.__objects.items():
+            temp[key] = obj.to_dict()
+        with open(self.__file_path, mode='w') as jsonfile:
+            json.dump(temp, jsonfile)
 
     def reload(self):
-        try:
-            with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
-                serialized_objs = json.load(f)
-                for key, obj in serialized_objs.items():
-                    class_name = obj['__class__']
-                    del obj['__class__']
-                    self.new(eval(class_name)(**obj))
-        except FileNotFoundError:
-            pass
+        """deserializes the JSON file to __objects"""
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
+
+        if exists(self.__file_path):
+            with open(self.__file_path) as jsonfile:
+                decereal = json.load(jsonfile)
+            for key, value in decereal.items():
+                cls_name = value['__class__']
+                cls = globals().get(cls_name)
+                if cls:
+                    self.__objects[key] = cls(**value)
 
