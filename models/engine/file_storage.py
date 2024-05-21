@@ -20,22 +20,12 @@ class FileStorage:
 
     def save(self):
         """serialize __objects to JSON file"""
-        temp = dict()
-        for key, obj in self.__objects.items():
-            temp[key] = obj.to_dict()
+        temp = {key: obj.to_dict() for key, obj in self.__objects.items()}
         with open(self.__file_path, mode='w') as jsonfile:
             json.dump(temp, jsonfile)
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.place import Place
-        from models.review import Review
-
         if exists(self.__file_path):
             with open(self.__file_path) as jsonfile:
                 decereal = json.load(jsonfile)
