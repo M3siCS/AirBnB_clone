@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """file containing basemodel class"""
-import uuid
 from datetime import datetime
 from models import storage
+import uuid
 
-
-class BaseModel:
+class BaseModel():
     """Class BaseModel, base model for AirBnB Clone"""
 
     def __init__(self, *args, **kwargs):
