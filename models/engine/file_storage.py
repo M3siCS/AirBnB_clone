@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """File Storage for AirBnB Clone"""
 import json
+from models.base_model import BaseModel
 from os.path import exists
 
 
