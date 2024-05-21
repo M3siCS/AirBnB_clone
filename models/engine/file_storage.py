@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """File Storage for AirBnB Clone"""
 import json
-import BaseModel
 from os.path import exists
 
 
@@ -21,17 +20,37 @@ class FileStorage:
 
     def save(self):
         """serialize __objects to JSON file"""
-        temp = {key: obj.to_dict() for key, obj in self.__objects.items()}
+        temp = dict()
+        for keys in self.__objects.keys():
+            temp[keys] = self.__objects[keys].to_dict()
         with open(self.__file_path, mode='w') as jsonfile:
             json.dump(temp, jsonfile)
 
     def reload(self):
         """deserializes the JSON file to __objects"""
+        from ..base_model import BaseModel
+        from ..user import User
+        from ..state import State
+        from ..city import City
+        from ..amenity import Amenity
+        from ..place import Place
+        from ..review import Review
+
         if exists(self.__file_path):
             with open(self.__file_path) as jsonfile:
                 decereal = json.load(jsonfile)
-            for key, value in decereal.items():
-                cls_name = value['__class__']
-                cls = globals().get(cls_name)
-                if cls:
-                    self.__objects[key] = cls(**value)
+            for keys in decereal.keys():
+                if decereal[keys]['__class__'] == "BaseModel":
+                    self.__objects[keys] = BaseModel(**decereal[keys])
+                elif decereal[keys]['__class__'] == "User":
+                    self.__objects[keys] = User(**decereal[keys])
+                elif decereal[keys]['__class__'] == "State":
+                    self.__objects[keys] = State(**decereal[keys])
+                elif decereal[keys]['__class__'] == "City":
+                    self.__objects[keys] = City(**decereal[keys])
+                elif decereal[keys]['__class__'] == "Amenity":
+                    self.__objects[keys] = Amenity(**decereal[keys])
+                elif decereal[keys]['__class__'] == "Place":
+                    self.__objects[keys] = Place(**decereal[keys])
+                elif decereal[keys]['__class__'] == "Review":
+                    self.__objects[keys] = Review(**decereal[keys])
