@@ -7,6 +7,7 @@ from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
 
+
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     classes = {"BaseModel", "State", "City", "Amenity", "Place", "Review"}
@@ -79,7 +80,8 @@ class HBNBCommand(cmd.Cmd):
         if args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        print([str(obj) for key, obj in objs.items() if key.split('.')[0] == args[0]])
+        print([str(obj) for key,
+            obj in objs.items() if key.split('.')[0] == args[0]])
 
     def do_update(self, arg):
         if not arg:
@@ -108,6 +110,6 @@ class HBNBCommand(cmd.Cmd):
         setattr(objs[obj_key], attr_name, attr_value)
         FileStorage().save()
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-

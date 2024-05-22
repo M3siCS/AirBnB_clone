@@ -4,6 +4,7 @@ from datetime import datetime
 from models import storage
 import uuid
 
+
 class BaseModel():
     """Class BaseModel, base model for AirBnB Clone"""
 
