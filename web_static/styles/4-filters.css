@@ -4,27 +4,23 @@
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
-.search-button {
+section.filters button{
     font-size: 18px;
+    color: white;
     background-color: #FF5A5F;
-    color: #FFFFFF;
     height: 48px;
-    width: 20%;
-    border: none;
+    border: 0px;
     border-radius: 4px;
+    width: 20%;
     margin-right: 30px;
-    transition: opacity 0.3s ease;
+    opacity: 1;
 }
 
-.search-button:hover {
+section.filters button:hover {
     opacity: 0.9;
 }
-
-.filters::after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
