@@ -5,27 +5,3 @@ body {
     font-size: 14px;
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-
-header, footer {
-    width: 100%;
-    position: relative;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    border-top: 1px solid #CCCCCC;
-}
-
-.logo {
-    width: 100px; /* Adjust width as needed */
-    height: 50px; /* Adjust height as needed */
-    background-image: url('../images/logo.png'); /* Adjust path as needed */
-    background-size: cover;
-    background-position: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 20px;
-}
-
